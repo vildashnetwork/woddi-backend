@@ -42,7 +42,7 @@ router.delete("/:id", async (req, res) => {
 //get all media
 router.get("/", async (req, res) => {
     try {
-        const medias = await MediaGallery.find().sort(createdAt: -1);
+        const medias = await MediaGallery.find().sort({ createdAt: -1 });
         res.status(200).json(medias);
     } catch (err) {
         res.status(500).json(err);
