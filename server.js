@@ -69,12 +69,13 @@ app.use(cookieParser());
 
 
 const allowedOrigins = [
-    "https://woddi.onrender.com",
+    "https://woddicameroon.onrender.com",
     "http://localhost:8080",
     FRONTEND_URL,
     "http://localhost:8081",
     "http://localhost:8082",
     "https://woddi-dashboard.onrender.com",
+   
 
 ];
 
