@@ -75,7 +75,8 @@ const allowedOrigins = [
     "http://localhost:8081",
     "http://localhost:8082",
     "https://woddi-dashboard.onrender.com",
-   
+   "https://woddi-impact-hub.vercel.app",
+   "https://www.woddicameroon.org"
 
 ];
 
