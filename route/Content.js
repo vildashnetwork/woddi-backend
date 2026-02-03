@@ -16,24 +16,24 @@ const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
 // POST new content and send email notification
 router.post("/", async (req, res) => {
-    try {
-        const newContent = new Content(req.body);
-        const savedContent = await newContent.save();
+  try {
+    const newContent = new Content(req.body);
+    const savedContent = await newContent.save();
 
-        // Fetch all admin emails
-        const admins = await Subscriber.find({}, "email").lean();
+    // Fetch all admin emails
+    const admins = await Subscriber.find({}, "email").lean();
 
-        if (!admins.length) {
-            return res.status(404).json({ error: "No admin accounts found." });
-        }
+    if (!admins.length) {
+      return res.status(404).json({ error: "No admin accounts found." });
+    }
 
-        const recipients = admins.map(admin => ({ email: admin.email }));
+    const recipients = admins.map(admin => ({ email: admin.email }));
 
-        // Subject of the email
-        const subject = `Latest News: ${newContent.title}`;
+    // Subject of the email
+    const subject = `Latest News: ${newContent.title}`;
 
-        // HTML email content
-        const htmlContent = `
+    // HTML email content
+    const htmlContent = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,7 +81,7 @@ router.post("/", async (req, res) => {
           <!-- CTA -->
           <tr>
             <td align="center" style="padding:30px;">
-              <a href="https://woddi.org/admin"
+              <a href="https://www.woddicameroon.org/news"
                  style="background:linear-gradient(135deg,#ff5fa2,#ff86c8);
                         color:#ffffff;
                         text-decoration:none;
@@ -112,74 +112,74 @@ router.post("/", async (req, res) => {
 </html>
 `;
 
-        // Prepare email
-        const emailData = {
-            sender: { email: "liblissz3@gmail.com", name: "WODDI Notifications" },
-            to: recipients,
-            subject,
-            htmlContent,
-            textContent: `Hello, check out the latest news: ${newContent.title}`
-        };
+    // Prepare email
+    const emailData = {
+      sender: { email: "liblissz3@gmail.com", name: "WODDI Notifications" },
+      to: recipients,
+      subject,
+      htmlContent,
+      textContent: `Hello, check out the latest news: ${newContent.title}`
+    };
 
-        // Send email
-        await emailApi.sendTransacEmail(emailData);
-        console.log(`Email sent to ${admins.length} admin(s)`);
+    // Send email
+    await emailApi.sendTransacEmail(emailData);
+    console.log(`Email sent to ${admins.length} admin(s)`);
 
-        // Respond with saved content
-        res.status(201).json({
-            success: true,
-            message: `Email sent to ${admins.length} admin(s)`,
-            content: savedContent
-        });
+    // Respond with saved content
+    res.status(201).json({
+      success: true,
+      message: `Email sent to ${admins.length} admin(s)`,
+      content: savedContent
+    });
 
-    } catch (err) {
-        console.error("Content creation/email error:", err?.response?.body || err);
-        res.status(500).json({ error: "Internal server error" });
-    }
+  } catch (err) {
+    console.error("Content creation/email error:", err?.response?.body || err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 //get all content
 router.get("/", async (req, res) => {
-    try {
-        const contents = await Content.find().sort({ createdAt: -1 });
-        res.status(200).json(contents);
-    } catch (err) {
-        res.status(500).json(err);
-    }
+  try {
+    const contents = await Content.find().sort({ createdAt: -1 });
+    res.status(200).json(contents);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 //get content by id
 router.get("/:id", async (req, res) => {
-    try {
-        const content = await Content.findById(req.params.id);
-        res.status(200).json(content);
-    } catch (err) {
-        res.status(500).json(err);
-    }
+  try {
+    const content = await Content.findById(req.params.id);
+    res.status(200).json(content);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 //update content by id
 router.put("/:id", async (req, res) => {
-    try {
-        const updatedContent = await Content.findByIdAndUpdate(
-            req.params.id,
-            { $set: req.body },
-            { new: true }
-        );
-        res.status(200).json(updatedContent);
-    } catch (err) {
-        res.status(500).json(err);
-    }
+  try {
+    const updatedContent = await Content.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(updatedContent);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 //delete content by id
 router.delete("/:id", async (req, res) => {
-    try {
-        await Content.findByIdAndDelete(req.params.id);
-        res.status(200).json("Content has been deleted...");
-    } catch (err) {
-        res.status(500).json(err);
-    }
+  try {
+    await Content.findByIdAndDelete(req.params.id);
+    res.status(200).json("Content has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 export default router;

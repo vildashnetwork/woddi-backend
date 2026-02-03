@@ -111,7 +111,7 @@ router.post("/", async (req, res) => {
           <!-- CTA -->
           <tr>
             <td align="center" style="padding:30px;">
-              <a href="https://woddi.org/admin"
+              <a href="https://woddi-dashboard.onrender.com/"
                  style="background:linear-gradient(135deg,#ff5fa2,#ff86c8);
                         color:#ffffff;
                         text-decoration:none;
