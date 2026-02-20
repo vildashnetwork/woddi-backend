@@ -73,7 +73,7 @@ const allowedOrigins = [
     "http://localhost:8080",
     FRONTEND_URL,
     "http://localhost:8081",
-    "http://localhost:8082",
+    "https://mydashboard.woddicameroon.org",
     "https://woddi-dashboard.onrender.com",
    "https://woddi-impact-hub.vercel.app",
    "https://www.woddicameroon.org"
